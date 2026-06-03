@@ -1,6 +1,16 @@
-name: 
+name: Artifact Upload/Download
 on:
   push:
+    branches: [ "main" ]
   workflow_dispatch:
 jobs:
-      
+  upload-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create artifact file
+        run: echo "This is an artifact file." > artifact.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
