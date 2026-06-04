@@ -1,16 +1,15 @@
 name: Working With Vars
-
 on:
     push:
         branches: 
             - 'main'
     workflow_dispatch:
-env:
-    DOCKER_REGISTRY: docker.io
-    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
 jobs:
     docker-build:
+        env:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout
