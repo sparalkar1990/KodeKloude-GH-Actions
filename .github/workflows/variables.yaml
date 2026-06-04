@@ -26,3 +26,6 @@ jobs:
     docker-container-execution:
         needs: docker-build
         runs-on: ubuntu-22.04
+        steps:
+            - name: Placeholder step
+              run: echo "docker-container-execution job has no steps yet"
