@@ -8,20 +8,31 @@ on:
 jobs:
     docker-build:
         env:
+            DOCKER_REGISTRY: docker.io
             DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
             DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+
             - name: Docker Login
               env:
                 DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
               run: |
                 docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+
             - name: Verify Login
               run: |
                 docker system info | grep -E 'Username|Registry'
+
+            - name: Docker Build
+              run: |
+                docker build -t $DCOCKER_REGISTRY/$DOCKER_USERNAME/dev-in.box .    
+
+            - name: Docker Push
+              run: |
+                docker push $DOCKER_REGISTRY/$DOCKER_USERNAME/dev-in.box    
 
     docker-container-execution:
         needs: docker-build
