@@ -28,7 +28,7 @@ jobs:
 
             - name: Docker Build
               run: |
-                docker build -t $DCOCKER_REGISTRY/$DOCKER_USERNAME/dev-in-box .    
+                docker build -t $DOCKER_REGISTRY/$DOCKER_USERNAME/dev-in-box .    
 
             - name: Docker Push
               run: |
