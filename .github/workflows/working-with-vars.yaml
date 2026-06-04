@@ -8,26 +8,22 @@ on:
 env:
     DOCKER_REGISTRY: docker.io
     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+
 jobs:
-    docker-image-builder:
+    docker-build:
         runs-on: ubuntu-22.04
         steps:
-            - 
-                name: Checkout
-                uses: actions/checkout@v4
-            
-            -    
-                name: Docker Login
-                env:
-                    DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-                run: |
-                    docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-            
-            -
-                name: Verify Login
-                run: |
-                    docker system info | grep -E 'Username|Registry'     
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Docker Login
+              env:
+                DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+              run: |
+                docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+            - name: Verify Login
+              run: |
+                docker system info | grep -E 'Username|Registry'
 
     docker-container-execution:
-        needs: docker-image-builder
+        needs: docker-build
         runs-on: ubuntu-22.04
